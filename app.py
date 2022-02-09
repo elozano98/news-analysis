@@ -15,7 +15,7 @@ def run() -> None:
     )
     st.title("📰 News Analyzer")
     headline = st.text_input("Headline:")
-    content = st.text_input("Content:")
+    content = st.text_area("Content:", height=200)
     if headline == "":
         st.error("Please, provide a headline.")
     else:
@@ -26,7 +26,7 @@ def run() -> None:
         button = st.button("Analyze")
         if button:
             predictions = analyzer(headline=headline, content=content)
-            col1, _, col2 = st.columns([2, 1, 5])
+            col1, _, col2 = st.columns([2, 1, 4])
 
             with col1:
                 st.subheader("Analysis:")
