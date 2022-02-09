@@ -1,5 +1,6 @@
-from transformers import TextClassificationPipeline
 from typing import Dict, Optional
+
+from transformers import TextClassificationPipeline
 
 
 class NewsPipeline(TextClassificationPipeline):

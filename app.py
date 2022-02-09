@@ -5,6 +5,13 @@ from annotated_text import annotated_text
 
 from analyzer import NewsAnalyzer
 
+ENTITY_COLOR = {
+    "PER": "#b2ffff",
+    "LOC": "#ffffb2",
+    "ORG": "#adfbaf",
+    "MISC": "#ffb2b2",
+}
+
 
 def run() -> None:
     analyzer = NewsAnalyzer(
@@ -64,7 +71,13 @@ def parse_entities(
     parsed_text = []
     for entity in entities:
         parsed_text.append(text[start : entity["start"]])
-        parsed_text.append((entity["word"], entity["entity_group"]))
+        parsed_text.append(
+            (
+                entity["word"],
+                entity["entity_group"],
+                ENTITY_COLOR[entity["entity_group"]],
+            )
+        )
         start = entity["end"]
     parsed_text.append(text[start:])
     return parsed_text
