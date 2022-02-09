@@ -1,1 +1,5 @@
-# news-analysis
+# News Analyzer
+
+```
+streamlit run app.py
+```
