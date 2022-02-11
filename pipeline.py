@@ -13,5 +13,5 @@ class NewsPipeline(TextClassificationPipeline):
             text = f" {self.tokenizer.sep_token} ".join([headline, content])
         else:
             text = headline
-        prediction = super().__call__(text)[0]
+        prediction = super().__call__(text, padding=True, truncation=True)[0]
         return {**prediction, "emoji": self.emojis[prediction["label"]]}
