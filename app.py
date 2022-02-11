@@ -21,18 +21,22 @@ def run() -> None:
         ner_model_name="dslim/bert-base-NER",
     )
     st.title("📰 News Analyzer")
-    headline = st.text_input("Headline:")
-    content = st.text_area("Content:", height=200)
-    if headline == "":
-        st.error("Please, provide a headline.")
-    else:
-        if content == "":
-            st.warning(
-                "Please, provide both headline and content to achieve better results."
+    with st.form("news-form", clear_on_submit=False):
+        st.session_state.headline = st.text_input("Headline:")
+        st.session_state.content = st.text_area("Content:", height=200)
+        st.session_state.button = st.form_submit_button("Analyze")
+
+    if "button" in st.session_state:
+        if st.session_state.headline == "":
+            st.error("Please, provide a headline.")
+        else:
+            if st.session_state.content == "":
+                st.warning(
+                    "Please, provide both headline and content to achieve better results."
+                )
+            predictions = analyzer(
+                headline=st.session_state.headline, content=st.session_state.content
             )
-        button = st.button("Analyze")
-        if button:
-            predictions = analyzer(headline=headline, content=content)
             col1, _, col2 = st.columns([2, 1, 4])
 
             with col1:
@@ -53,12 +57,16 @@ def run() -> None:
             with col2:
                 st.subheader("Headline:")
                 annotated_text(
-                    *parse_entities(headline, predictions["ner"]["headline"])
+                    *parse_entities(
+                        st.session_state.headline, predictions["ner"]["headline"]
+                    )
                 )
                 st.subheader("Content:")
-                if content:
+                if st.session_state.content:
                     annotated_text(
-                        *parse_entities(content, predictions["ner"]["content"])
+                        *parse_entities(
+                            st.session_state.content, predictions["ner"]["content"]
+                        )
                     )
                 else:
                     st.error("Content not provided.")
