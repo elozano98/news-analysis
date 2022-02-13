@@ -15,9 +15,9 @@ ENTITY_COLOR = {
 
 def run() -> None:
     analyzer = NewsAnalyzer(
-        category_model_name="elozano/news-category",
-        fake_model_name="elozano/news-fake",
-        clickbait_model_name="elozano/news-clickbait",
+        category_model_name="elozano/bert-base-cased-news-category",
+        fake_model_name="elozano/bert-base-cased-fake-news",
+        clickbait_model_name="elozano/bert-base-cased-clickbait-news",
         ner_model_name="dslim/bert-base-NER",
     )
     st.title("📰 News Analyzer")
